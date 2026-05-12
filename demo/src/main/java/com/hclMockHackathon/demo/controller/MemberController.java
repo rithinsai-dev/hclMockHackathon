@@ -29,6 +29,11 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(request));
     }
 
+    @GetMapping
+    public ResponseEntity<List<MemberResponse>> getAllMembers() {
+        return ResponseEntity.ok(memberService.getAllMembers());
+    }
+
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberResponse> getMemberById(@PathVariable Long memberId) {
         return ResponseEntity.ok(memberService.getMemberById(memberId));

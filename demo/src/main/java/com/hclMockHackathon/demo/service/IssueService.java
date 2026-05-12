@@ -88,6 +88,12 @@ public class IssueService {
                 .stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<IssueResponse> getAllIssues() {
+        return issueRecordRepository.findAll()
+                .stream().map(this::toResponse).collect(Collectors.toList());
+    }
+
     private IssueResponse toResponse(IssueRecord record) {
         return IssueResponse.builder()
                 .issueId(record.getIssueId())

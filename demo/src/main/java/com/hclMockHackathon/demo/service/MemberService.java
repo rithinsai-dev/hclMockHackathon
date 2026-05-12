@@ -26,6 +26,7 @@ public class MemberService {
         Member member = Member.builder()
                 .name(request.getName())
                 .email(request.getEmail())
+                .password(request.getPassword())
                 .build();
         return toResponse(memberRepository.save(member));
     }
@@ -38,6 +39,12 @@ public class MemberService {
     public Member getMemberEntityById(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new ResourceNotFoundException("Member", memberId));
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List<MemberResponse> getAllMembers() {
+        return memberRepository.findAll().stream()
+                .map(this::toResponse).collect(java.util.stream.Collectors.toList());
     }
 
     private MemberResponse toResponse(Member member) {
